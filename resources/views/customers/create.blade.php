@@ -56,7 +56,7 @@
                                     </option>
                                 @endforeach
                             </select>
-                            <x-input-error class="mt-2" :messages="$errors->get('email')" />
+                            <x-input-error class="mt-2" :messages="$errors->get('gender')" />
                         </div>
 
                         <div>
@@ -70,7 +70,12 @@
 
                             @if (session('status') === 'customer-created')
                                 <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
-                                    class="text-sm text-gray-600 dark:text-gray-400">{{ __('Saved.') }}</p>
+                                    class="text-sm text-green-600 dark:text-green-400">{{ session('message') }}</p>
+                            @endif
+
+                            @if (session('status') === 'customer-not-created')
+                                <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
+                                    class="text-sm text-red-600 dark:text-red-400">{{ session('message') }}</p>
                             @endif
                         </div>
                     </form>

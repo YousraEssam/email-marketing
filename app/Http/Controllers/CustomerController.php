@@ -57,8 +57,13 @@ class CustomerController extends Controller
      */
     public function store(CustomerRequest $request): RedirectResponse
     {
-        $this->customerService->createNewCustomer($request->all());
-        return back()->with('status', 'customer-created');
+        $customer = $this->customerService->createNewCustomer($request->all());
+        if( $customer ) {
+            return back()->with('status', 'customer-created')
+                ->with('message', $customer->full_name .' was created successfully');
+        }
+        return back()->with('status', 'customer-not-created')
+            ->with('message', 'Group was not created.');
     }
 
     /**

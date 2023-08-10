@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\GenderType;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -37,9 +38,23 @@ class Customer extends Model
 
     /**
      * Get the groups for the customer.
+     *
+     * @return BelongsToMany
      */
     public function groups(): BelongsToMany
     {
         return $this->belongsToMany(Group::class, 'customer_group')->withTimestamps();
+    }
+
+    /**
+     * Interact with the customer's full name.
+     *
+     * @return Attribute
+     */
+    protected function fullName(): Attribute
+    {
+        return Attribute::make(
+            get: fn (mixed $value, array $attributes) => ucfirst($attributes['first_name']) . ' ' . ucfirst($attributes['last_name'])
+        );
     }
 }

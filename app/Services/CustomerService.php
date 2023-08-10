@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Customer;
 use App\Repositories\CustomerRepository;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -19,10 +20,11 @@ class CustomerService
 
     /**
      * @param array $requestData
+     * @return Customer
      */
-    public function createNewCustomer(array $requestData): void
+    public function createNewCustomer(array $requestData): Customer
     {
-        $this->customerRepository->createNew($requestData);
+        return $this->customerRepository->createNew($requestData);
     }
 
     public function getAllCustomersWithGroups(): Collection

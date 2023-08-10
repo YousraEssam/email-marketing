@@ -17,8 +17,7 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">First Name</th>
-                        <th scope="col">Last Name</th>
+                        <th scope="col">Full Name</th>
                         <th scope="col">Email</th>
                         <th scope="col">Gender</th>
                         <th scope="col">Birth Date</th>
@@ -29,8 +28,7 @@
                     @foreach ($customers as $customer)
                         <tr>
                             <th scope="row">{{ $customer->id }}</th>
-                            <td>{{ $customer->first_name }}</td>
-                            <td>{{ $customer->last_name }}</td>
+                            <td>{{ $customer->full_name }}</td>
                             <td>{{ $customer->email }}</td>
                             <td>{{ $customer->gender }}</td>
                             <td>{{ $customer->birth_date }}</td>
