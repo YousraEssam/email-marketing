@@ -44,7 +44,7 @@ class SendCustomerGroupEmails extends Command
             $this->info("Email sent");
 
         } catch(EmailSendingException $e) {
-            $this->info("Email not sent with error message: ." $e->getMessage());
+            $this->info("Email not sent");
         }
     }
 }
