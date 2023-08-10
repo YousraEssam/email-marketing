@@ -15,18 +15,17 @@ class CustomerGroupsMail extends Mailable
     use Queueable;
     use SerializesModels;
 
-    public $subject;
-    public $body;
-    public $customerEmail;
+    /**
+     * @var array
+     */
+    public $data;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($subject, $body, $customerEmail)
+    public function __construct(array $data)
     {
-        $this->subject = $subject;
-        $this->body = $body;
-        $this->customerEmail = $customerEmail;
+        $this->data = $data;
     }
 
     /**
@@ -35,8 +34,8 @@ class CustomerGroupsMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: $this->subject,
-            to: $this->customerEmail
+            subject: $this->data['subject'],
+            to: $this->data['customerEmail']
         );
     }
 
@@ -48,8 +47,8 @@ class CustomerGroupsMail extends Mailable
         return new Content(
             view: 'mails.mailTemplate',
             with: [
-                'content' => $this->body,
-                'customer' => Customer::whereEmail($this->customerEmail)->first()
+                'content' => $this->data['body'],
+                'customer' => Customer::whereEmail($this->data['customerEmail'])->first()
             ]
         );
     }

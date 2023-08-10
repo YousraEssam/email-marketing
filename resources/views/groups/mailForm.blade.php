@@ -1,7 +1,6 @@
 <section>
     @push('style')
-    <script src="{{URL::asset('ckeditor/ckeditor.js')}}"></script>
-
+        <script src="{{ URL::asset('ckeditor/ckeditor.js') }}"></script>
     @endpush
     <header>
         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
@@ -38,6 +37,15 @@
         <br>
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
+            @if (session('status') === 'email-sent')
+                <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
+                    class="text-sm text-green-600 dark:text-green-400">{{ session('message') }}</p>
+            @endif
+
+            @if (session('status') === 'email-not-sent')
+                <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
+                    class="text-sm text-red-600 dark:text-red-400">{{ session('message') }}</p>
+            @endif
         </div>
     </form>
 </section>
