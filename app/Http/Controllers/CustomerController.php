@@ -5,18 +5,36 @@ namespace App\Http\Controllers;
 use App\Enums\GenderType;
 use App\Http\Requests\CustomerRequest;
 use App\Models\Customer;
-use App\Models\Group;
+use App\Services\CustomerService;
+use App\Services\GroupService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
     /**
+     * @var GroupService
+     */
+    protected $groupService;
+
+    /**
+     * @var CustomerService
+     */
+    protected $customerService;
+
+    public function __construct(GroupService $groupService, CustomerService $customerService)
+    {
+        $this->groupService = $groupService;
+        $this->customerService = $customerService;
+    }
+
+    /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('customers.index');
+        $customers = $this->customerService->getAllCustomersWithGroups();
+        return view('customers.index', compact('customers'));
     }
 
     /**
@@ -24,7 +42,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        $groups = Group::all()->pluck('id', 'name')->toArray();
+        $groups = $this->groupService->getGroupsAsArray();
         $genderTypes = GenderType::cases();
 
         return view('customers.create', compact('groups', 'genderTypes'));
@@ -39,8 +57,7 @@ class CustomerController extends Controller
      */
     public function store(CustomerRequest $request): RedirectResponse
     {
-        $customer = Customer::create($request->only(['first_name', 'last_name', 'email', 'gender', 'birth_date']));
-        $customer->groups()->attach($request->only('group_id'));
+        $this->customerService->createNewCustomer($request->all());
         return back()->with('status', 'customer-created');
     }
 

@@ -31,9 +31,9 @@ class CustomerRequest extends FormRequest
             'first_name' => 'required|min:1|max:20',
             'last_name'  => 'required|min:1|max:20',
             'email'  => 'required|email|unique:customers,email',
-            'gender' => new Enum(GenderType::class),
-            'birth_date' => 'date_format:d-m-Y',
-            'group_id' => 'required', Rule::in($groupsIds)
+            'gender' => 'nullable', new Enum(GenderType::class),
+            'birth_date' => 'nullable|date_format:d-m-Y',
+            'group_id' => 'required|array', Rule::in($groupsIds)
         ];
     }
 }

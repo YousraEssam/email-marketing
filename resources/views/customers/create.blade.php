@@ -35,7 +35,7 @@
 
                         <div>
                             <x-input-label class="required" for="group_id" :value="__('Group')" />
-                            <select id="group_id" name="group_id" type="group_id" class="mt-1 block w-full" required>
+                            <select id="group_id" name="group_id[]" type="group_id" class="mt-1 block w-full" required multiple>
                                 <option selected>{{ __('Select Group') }}</option>
                                 @foreach ($groups as $key=>$value)
                                     <option value="{{ $value }}">
@@ -49,7 +49,7 @@
                         <div>
                             <x-input-label for="gender" :value="__('Gender')" />
                             <select id="gender" name="gender" type="gender" class="mt-1 block w-full">
-                                <option selected>{{ __('Select Gender') }}</option>
+                                <option selected value="">{{ __('Select Gender') }}</option>
                                 @foreach ($genderTypes as $type)
                                     <option value="{{ $type->value }}">
                                         {{ $type->name }}
