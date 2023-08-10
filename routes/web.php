@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('customers', CustomerController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
     Route::resource('groups', GroupController::class)->only('index', 'create', 'store');
+    Route::post('sendMail', [MailController::class, 'sendEmail'])->name('sendGroupMail');
 });
 
 require __DIR__.'/auth.php';

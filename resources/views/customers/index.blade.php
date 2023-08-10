@@ -12,6 +12,7 @@
                 {{ __('Create new customer') }}
             </a>
         </div>
+        <br>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <table class="table">
                 <thead>
@@ -45,9 +46,9 @@
                                     @csrf
                                     @method('DELETE')
 
-                                    <x-primary-button>
+                                    <x-danger-button>
                                         {{ __('Delete') }}
-                                    </x-primary-button>
+                                    </x-danger-button>
                                 </form>
                             </td>
                         </tr>

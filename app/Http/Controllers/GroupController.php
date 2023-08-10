@@ -14,15 +14,9 @@ class GroupController extends Controller
      */
     protected $groupService;
 
-    /**
-     * @var CustomerService
-     */
-    protected $customerService;
-
-    public function __construct(GroupService $groupService, CustomerService $customerService)
+    public function __construct(GroupService $groupService)
     {
         $this->groupService = $groupService;
-        $this->customerService = $customerService;
     }
 
     /**
@@ -30,7 +24,9 @@ class GroupController extends Controller
      */
     public function index()
     {
-        return view('groups.index');
+        $groups = $this->groupService->getGroupsAsArray();
+
+        return view('groups.index', compact('groups'));
     }
 
     /**
