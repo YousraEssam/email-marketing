@@ -37,6 +37,6 @@ class CustomerGroupSendEmailJob implements ShouldQueue
      */
     public function handle()
     {
-        Mail::to($this->data['customerEmail'])->send(new CustomerGroupsMail($this->data));
+        Mail::send(new CustomerGroupsMail($this->data));
     }
 }

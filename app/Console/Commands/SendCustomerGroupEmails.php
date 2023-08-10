@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use App\Exceptions\EmailSendingException;
-use App\Jobs\CustomerGroupSendEmailJob;
 use App\Repositories\GroupRepository;
 use App\Services\MailService;
 use Illuminate\Console\Command;
@@ -31,11 +30,12 @@ class SendCustomerGroupEmails extends Command
      */
     public function handle()
     {
-        $groupRepository = new GroupRepository();
-        $groupsIds = $groupRepository->getGroupsIdsAsArray();
-
         try {
-            CustomerGroupSendEmailJob::dispatch([
+            $groupRepository = new GroupRepository();
+            $groupsIds = $groupRepository->getGroupsIdsAsArray();
+
+            $mailService = new MailService($groupRepository);
+            $mailService->sendEmailToCustomerGroup([
                 'subject' => 'Test Subject',
                 'body' => '<p>Test Body</p>',
                 'group_id' => $groupsIds

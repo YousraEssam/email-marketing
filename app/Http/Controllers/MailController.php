@@ -2,12 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Exceptions\EmailSendingException;
+use App\Services\MailService;
 use App\Http\Requests\MailRequest;
-use App\Jobs\CustomerGroupSendEmailJob;
+use App\Exceptions\EmailSendingException;
 
 class MailController extends Controller
 {
+    /**
+     * @var MailService
+     */
+    protected $mailService;
+
+    public function __construct(MailService $mailService)
+    {
+        $this->mailService = $mailService;
+    }
+
     /**
      *
      * @param MailRequest $request
@@ -17,7 +27,7 @@ class MailController extends Controller
     public function sendEmail(MailRequest $request)
     {
         try {
-            CustomerGroupSendEmailJob::dispatch($request->all());
+            $this->mailService->sendEmailToCustomerGroup($request->all());
 
             return back()
                 ->with('status', 'email-sent')

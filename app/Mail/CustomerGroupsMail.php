@@ -2,7 +2,6 @@
 
 namespace App\Mail;
 
-use App\Models\Customer;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -35,7 +34,7 @@ class CustomerGroupsMail extends Mailable
     {
         return new Envelope(
             subject: $this->data['subject'],
-            to: $this->data['customerEmail']
+            to: $this->data['customerEmails']
         );
     }
 
@@ -48,7 +47,6 @@ class CustomerGroupsMail extends Mailable
             view: 'mails.mailTemplate',
             with: [
                 'content' => $this->data['body'],
-                'customer' => Customer::whereEmail($this->data['customerEmail'])->first()
             ]
         );
     }

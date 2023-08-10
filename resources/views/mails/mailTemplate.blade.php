@@ -7,7 +7,7 @@
 </head>
 
 <body>
-    Dear {{ $customer->full_name }} !
+    Dear Customer !
     {{$content}}
     Thank You,
     <br />
