@@ -27,8 +27,32 @@ class CustomerService
         return $this->customerRepository->createNew($requestData);
     }
 
+    /**
+     * @return Collection
+     */
     public function getAllCustomersWithGroups(): Collection
     {
         return $this->customerRepository->getAllCustomersWithGroups();
+    }
+
+    /**
+     * @param array $requestData
+     * @param Customer $customer
+     *
+     * @return Customer
+     */
+    public function updateCustomer(array $requestData, Customer $customer): Customer
+    {
+        return $this->customerRepository->updateCustomer($requestData, $customer);
+    }
+
+    /**
+     * @param Customer $customer
+     *
+     * @return bool
+     */
+    public function deleteCustomer(Customer $customer): bool
+    {
+        return $this->customerRepository->deleteCustomer($customer);
     }
 }

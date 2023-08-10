@@ -19,8 +19,36 @@ class CustomerRepository
         return $customer;
     }
 
+    /**
+     * @return Collection
+     */
     public function getAllCustomersWithGroups(): Collection
     {
         return Customer::with('groups')->get();
+    }
+
+    /**
+     * @param array $requestData
+     * @param Customer $customer
+     *
+     * @return Customer
+     */
+    public function updateCustomer(array $requestData, Customer $customer): Customer
+    {
+        $customer->update($requestData);
+        $customer->groups()->sync($requestData['group_id']);
+
+        return $customer;
+    }
+
+    /**
+     * @param Customer $customer
+     *
+     * @return boolean
+     */
+    public function deleteCustomer(Customer $customer): bool
+    {
+        $customer->groups()->detach();
+        return $customer->delete();
     }
 }

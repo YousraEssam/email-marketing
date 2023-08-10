@@ -4,11 +4,11 @@ namespace App\Http\Requests;
 
 use App\Enums\GenderType;
 use App\Models\Group;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Enum;
 
-class CustomerRequest extends FormRequest
+class CustomerEditRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -30,7 +30,7 @@ class CustomerRequest extends FormRequest
         return [
             'first_name' => 'required|min:1|max:20',
             'last_name'  => 'required|min:1|max:20',
-            'email'  => 'required|email|unique:customers,email',
+            'email'  => 'required|email|unique:customers,email,'.$this->customer->id,
             'gender' => 'nullable', new Enum(GenderType::class),
             'birth_date' => 'nullable|date_format:Y-m-d',
             'group_id' => 'required|array', Rule::in($groupsIds)

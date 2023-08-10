@@ -13,4 +13,14 @@ class GroupRepository
     {
         return Group::all()->pluck('id', 'name')->toArray();
     }
+
+    /**
+     * @param array $requestData
+     *
+     * @return Group
+     */
+    public function createNew(array $requestData): Group
+    {
+        return Group::create($requestData);
+    }
 }

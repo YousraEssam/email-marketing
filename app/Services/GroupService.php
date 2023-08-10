@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Group;
 use App\Repositories\GroupRepository;
 
 class GroupService
@@ -22,5 +23,15 @@ class GroupService
     public function getGroupsAsArray(): array
     {
         return $this->groupRepository->getGroupsAsArray();
+    }
+
+    /**
+     * @param array $requestData
+     *
+     * @return Group
+     */
+    public function createNew(array $requestData): Group
+    {
+        return $this->groupRepository->createNew($requestData);
     }
 }
